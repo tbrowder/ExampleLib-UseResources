@@ -1,0 +1,30 @@
+{
+  "auth": "zef:tbrowder",
+  "authors": [
+    "Tom Browder"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "Provides routines to access $?DISTRIBUTION for installed module distributions",
+  "license": "Artistic-2.0",
+  "name": "Module::Utils",
+  "perl": "6.d",
+  "provides": {
+    "Module::Utils": "lib/Module/Utils.rakumod"
+  },
+  "resources": [
+    "file1",
+    "file2",
+    "sdir/file3",
+    "../lib/Module/Utils.rakumod"
+  ],
+  "source-url": "https://github.com/tbrowder/Module-Utils.git",
+  "tags": [
+    "module distributions resources installed precomp"
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.1"
+}

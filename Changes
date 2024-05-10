@@ -1,0 +1,6 @@
+Revision history for Module::Utils
+
+{{$NEXT}}
+
+    - Initial version (a fork of and replacement for module
+        'HowToUseModuleResources')

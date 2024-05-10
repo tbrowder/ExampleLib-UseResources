@@ -1,0 +1,6 @@
+use Test;
+use Module::Utils;
+
+pass "replace me";
+
+done-testing;
