@@ -7,12 +7,12 @@
   ],
   "depends": [
   ],
-  "description": "Provides routines to access $?DISTRIBUTION for installed module distributions",
+  "description": "Provides routines to access $?DISTRIBUTION resources for installed module distributions",
   "license": "Artistic-2.0",
-  "name": "Module::Utils",
+  "name": "ExampleLib::UseResources",
   "perl": "6.d",
   "provides": {
-    "Module::Utils": "lib/Module/Utils.rakumod"
+    "ExampleLib::UseResources": "lib/ExampleLib/UseResources.rakumod"
   },
   "resources": [
     "file1",
@@ -20,7 +20,7 @@
     "sdir/file3",
     "../lib/Module/Utils.rakumod"
   ],
-  "source-url": "https://github.com/tbrowder/Module-Utils.git",
+  "source-url": "https://github.com/tbrowder/ExampleLib-UseResources.git",
   "tags": [
     "module distributions resources installed precomp"
   ],

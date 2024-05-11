@@ -2,64 +2,66 @@
 
 =head1 NAME
 
-B<Module::Utils> - Demonstrates access to C<$?DISTRIBUTION>
-          "resources" for installed module distributions
+B<ExampleLib::UseResources> - Provides routines to access $?DISTRIBUTION rsources for installed module distributions
 
 =head1 SYNOPSIS
 
 =begin code :lang<raku>
 use Module::Utils;
-
-demo # OUTPUT: «Usage: demo <number of lines [min 2] > | all␤»
+# use its routines to query and download your module's repository contents
 =end code
 
 =head1 DESCRIPTION
 
-B<Module::Utils> aims to demonstrate use of the special
-variable, C<$?DISTRIBUTION>, to access files included in an installed
+This package provides module authors with a module Rakumod file to copy and paste into
+their own module distribution repo that will enable them to use
+the special variable, C<$?RESOURCES>, to access files included in an installed
 module distribution.
 
-This module has a binary executable, C<demo>, which, when executed,
-shows the results of using the variable to access the following file
-(all text files, but any type file should work):
+=head2 Use the module in your code
+
+To use it in your module repo 'MyModule', copy this module's 
+'/lib/ExampleLib/UseResources.rakumod' file to a unique module in your repo's
+'lib' directory, rename it as appropriate, and update its inside name accordingly.
+Note there is a special binary executable installed with this module to do that 
+for you:
 
 =begin code
-resources/file1      # <== listed in file C<META6.json> 
-resources/file2      # <== listed in file C<META6.json>
-resources/sdir/file3 # <== listed in file C<META6.json>
-../lib/Module::Utils.rakumod  # <== listed in file C<META6.json>
-../t/01-basic.rakutest  # <== B<NOT> listed in file C<META6.json> file
+copy-resources-module file=<desired module file name> module=<desired module name>
+=end code
+
+The process also creates a test file for that installation. Note the files are
+created in the current directory and you will have to be put it in place manually.
+
+=head2 Module details
+
+For example, say your module's file structure includes the following files:
+
+=begin code
+resources/file1         # <== listed in file 'META6.json'
+resources/file2         # <== listed in file 'META6.json'
+resources/sdir/file3    # <== listed in file 'META6.json'
+../lib/MyModule.rakumod # <== listed in file 'META6.json'
+../t/01-basic.rakutest  # <== NOT listed in the 'META6.json' file
 =end code
 
 Notice some oddities in the file list above:
 
-=begin item 
-File 't/01-basic.t' 
+=begin item
+File 't/01-basic.rakutest'
 
-The file cannot be accessed because it is B<not> listed in C<META6.json>.
+The file I<cannot> be accessed because it is I<not> listed in the C<META6.json> file.
 =end item
 
-=begin item 
-File '../lib/Module::Utils.rakumod' 
+=begin item
+File '../lib/MyModule.rakumod'
 
 The file's contents are available.  The same is true for any file
-in the source code if it's listed in file C<META6.json> in the C<"resources:"> list.
-In that list its path must be shown B<relative> to directory './resources'.
+in the source code I<ifi> it's listed in file C<META6.json> in 
+the C<"resources:"> list.
+In that list its path I<must> be shown I<relative> to directory './resources'
+as it is in the example.
 =end item
-
-The provided subroutines may be used to provide users of the installed
-module with access to the contents of any file so listed as described above.
-
-For reference, the applicable part of this distribution's C<META6.json> is shown:
-
-=begin code
-  "resources": [
-    "file1",
-    "file2",
-    "sdir/file3",
-    "../lib/Module/Utils.rakumod"
-  ],
-=end code
 
 For the moment, authors must list the desired resources twice: once in
 the C<META6.json> file and once in the source code's C<resources>
@@ -69,6 +71,8 @@ Eventally, C<App::Mi6>'s C<mi6> binary program's C<build> command will
 ensure the C<META6.json>'s C<resources> list is the exact duplicate of
 the source C<resources> directory so the author will not have to
 maintain two lists. (See issue #176 at L<https://github.com/skaji/mi6>.)
+
+=head1 Routines currently available
 
 =head1 CREDITS
 

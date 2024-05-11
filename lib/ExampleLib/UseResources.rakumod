@@ -1,4 +1,4 @@
-unit module Module::Utils;
+unit module ExampleLib::UseResources;
 
 sub get-resources-paths(:$debug --> List) is export {
     my @list =
