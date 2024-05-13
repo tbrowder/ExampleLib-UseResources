@@ -3,13 +3,19 @@ use Test;
 use ExampleLib::UseResources;
 use File::Temp;
 
-my $debug = 1;
+my $debug = 0;
 
 # exercise loading the example in resources
 my %rpaths = get-resources-hash;
 if $debug {
     say "DEBUG: \%rpaths:";
-    say "  $_" for %rpaths.keys;
+    my @k = %rpaths.keys.sort;
+    for @k -> $k {
+        my $f = %rpaths{$k};
+        say "  $f";
+        my $s = get-content $f;
+        say "    contents: ", $s;
+    }
     say "DEBUG: early exit"; exit;
 }
 
