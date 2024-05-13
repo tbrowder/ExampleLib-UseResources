@@ -8,7 +8,7 @@ B<ExampleLib::UseResources> - Provides routines to access $?DISTRIBUTION rsource
 
 =begin code :lang<raku>
 # Copy and rename its module and test file into your
-# module's repo. Then use its routines to query and 
+# module's repo. Then use its routines to query and
 # download your installed module's repository contents.
 $ copy-resources-module file=Utils  mod=Module::Utils
 # OUTPUT
@@ -17,66 +17,84 @@ $ copy-resources-module file=Utils  mod=Module::Utils
 
 =head1 DESCRIPTION
 
-This package provides module authors with a Rakumod module file to copy and paste into
-their own module distribution repo that will enable them to use
-the special variable, C<$?DISTRIBUTION>, to access files included in an installed
-module distribution.
+This package provides module authors with a Rakumod module file to
+copy and paste into their own module distribution repo that will
+enable them to use the special variable, C<$?DISTRIBUTION>, to access
+files included in an installed module distribution.
 
 =head2 Use the module in your code
 
-To use it in your module repo 'MyModule', copy this module's 
-'/lib/ExampleLib/UseResources.rakumod' file to a unique module in your repo's
-'lib' directory, rename it as appropriate, and update its inside name accordingly.
-Note there is a special binary executable installed with this module to do that 
-for you:
+To use it in your module repo 'MyModule', copy this module's
+'/lib/ExampleLib/UseResources.rakumod' file to a unique module in your
+repo's 'lib' directory, rename it as appropriate, and update its
+inside name accordingly.  Note there is a special binary executable
+installed with this module to do that for you:
 
 =begin code
-copy-resources-module file=<desired module file name> module=<desired module name>
+copy-resources-module file=<desired module file name> mod=<desired module name>
 =end code
 
-The process also creates a test file for that installation. Note the files are
-created in the current directory, and you will have to be put it in its
-proper place manually.
+The process also creates a test file for that installation. Note the
+files are created in the current directory, and you will have to put
+them in their proper place manually.
 
 =head2 Module details
 
 For example, say your module's file structure includes the following files:
 
 =begin code
-resources/file1         # <== listed in file 'META6.json'
-resources/file2         # <== listed in file 'META6.json'
-resources/sdir/file3    # <== listed in file 'META6.json'
-../lib/MyModule.rakumod # <== listed in file 'META6.json'
-../t/01-basic.rakutest  # <== NOT listed in the 'META6.json' file
+resources/file1         # <= exists, listed in 'META6.json'
+resources/file2         # <= exists, listed in 'META6.json'
+resources/sdir/file3    # <= exists, listed in 'META6.json'
+../lib/MyModule.rakumod # <= exists, listed in 'META6.json'
+../t/01-basic.rakutest  # <= exists, NOT listed in 'META6.json'
+resources/file4         # <= NONE EXISTENT, BUT listed in 'META6.json'
 =end code
 
-Notice some oddities in the file list above:
+In general, any I<existing> file in the distribution's repository
+directory is accessible via use of this module I<if and only if> its
+path, relative to the 'resources' directory is listed in the
+I<resources> section of the 'META6.json'. Note it does I<not> have to
+be listed in the 'resources' directory as long as its relative path is correctly
+listed in 'META6.json'.
+
+Following are examples illustrating those rules:
+
+=begin item
+File 'resources/file4'
+
+ERROR: The file I<cannot> be accessed because it does not exist, even
+though it is listed in the C<META6.json> file.
+
+=end item
 
 =begin item
 File 't/01-basic.rakutest'
 
-The file I<cannot> be accessed because it is I<not> listed in the C<META6.json> file.
+ERROR: The file I<cannot> be accessed because it is I<not> listed in
+the C<META6.json> file.
+
 =end item
 
 =begin item
 File '../lib/MyModule.rakumod'
 
-The file's contents are available.  The same is true for any file
-in the source code I<ifi> it's listed in file C<META6.json> in 
-the C<"resources:"> list.
-In that list its path I<must> be shown I<relative> to directory './resources'
-as it is in the example, so it is effecttively listed in the './resources'
-directory.
+ODDITY: The file's contents are available because its relatiive
+path is correctly listed in the 'META6.json' file.
+
 =end item
 
 For the moment, authors must list the desired resources twice: once in
 the C<META6.json> file and once in the source code's C<resources>
 directory.
 
+=head2 Limitation relief
+
 Eventally, C<App::Mi6>'s C<mi6> binary program's C<build> command will
 ensure the C<META6.json>'s C<resources> list is the exact duplicate of
 the source C<resources> directory so the author will not have to
-maintain two lists. (See issue #176 at L<https://github.com/skaji/mi6>.)
+maintain two lists. (See issue #176 at
+L<https://github.com/skaji/mi6>.)
 
 =head1 Routines currently available
 

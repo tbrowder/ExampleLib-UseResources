@@ -10,7 +10,7 @@ SYNOPSIS
 
 ```raku
 # Copy and rename its module and test file into your
-# module's repo. Then use its routines to query and 
+# module's repo. Then use its routines to query and
 # download your installed module's repository contents.
 $ copy-resources-module file=Utils  mod=Module::Utils
 # OUTPUT
@@ -26,32 +26,42 @@ Use the module in your code
 
 To use it in your module repo 'MyModule', copy this module's '/lib/ExampleLib/UseResources.rakumod' file to a unique module in your repo's 'lib' directory, rename it as appropriate, and update its inside name accordingly. Note there is a special binary executable installed with this module to do that for you:
 
-    copy-resources-module file=<desired module file name> module=<desired module name>
+    copy-resources-module file=<desired module file name> mod=<desired module name>
 
-The process also creates a test file for that installation. Note the files are created in the current directory, and you will have to be put it in its proper place manually.
+The process also creates a test file for that installation. Note the files are created in the current directory, and you will have to put them in their proper place manually.
 
 Module details
 --------------
 
 For example, say your module's file structure includes the following files:
 
-    resources/file1         # <== listed in file 'META6.json'
-    resources/file2         # <== listed in file 'META6.json'
-    resources/sdir/file3    # <== listed in file 'META6.json'
-    ../lib/MyModule.rakumod # <== listed in file 'META6.json'
-    ../t/01-basic.rakutest  # <== NOT listed in the 'META6.json' file
+    resources/file1         # <= exists, listed in 'META6.json'
+    resources/file2         # <= exists, listed in 'META6.json'
+    resources/sdir/file3    # <= exists, listed in 'META6.json'
+    ../lib/MyModule.rakumod # <= exists, listed in 'META6.json'
+    ../t/01-basic.rakutest  # <= exists, NOT listed in 'META6.json'
+    resources/file4         # <= NONE EXISTENT, BUT listed in 'META6.json'
 
-Notice some oddities in the file list above:
+In general, any *existing* file in the distribution's repository directory is accessible via use of this module *if and only if* its path, relative to the 'resources' directory is listed in the *resources* section of the 'META6.json'. Note it does *not* have to be listed in the 'resources' directory as long as its relative path is correctly listed in 'META6.json'.
+
+Following are examples illustrating those rules:
+
+  * File 'resources/file4'
+
+    ERROR: The file *cannot* be accessed because it does not exist, even though it is listed in the `META6.json` file.
 
   * File 't/01-basic.rakutest'
 
-    The file *cannot* be accessed because it is *not* listed in the `META6.json` file.
+    ERROR: The file *cannot* be accessed because it is *not* listed in the `META6.json` file.
 
   * File '../lib/MyModule.rakumod'
 
-    The file's contents are available. The same is true for any file in the source code *ifi* it's listed in file `META6.json` in the `"resources:"` list. In that list its path *must* be shown *relative* to directory './resources' as it is in the example, so it is effecttively listed in the './resources' directory.
+    ODDITY: The file's contents are available because its relatiive path is correctly listed in the 'META6.json' file.
 
 For the moment, authors must list the desired resources twice: once in the `META6.json` file and once in the source code's `resources` directory.
+
+Limitation relief
+-----------------
 
 Eventally, `App::Mi6`'s `mi6` binary program's `build` command will ensure the `META6.json`'s `resources` list is the exact duplicate of the source `resources` directory so the author will not have to maintain two lists. (See issue #176 at [https://github.com/skaji/mi6](https://github.com/skaji/mi6).)
 
