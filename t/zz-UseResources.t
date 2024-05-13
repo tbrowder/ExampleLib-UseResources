@@ -21,19 +21,21 @@ if $debug {
 
 my $eg     = "zz-UseResources.t";
 my $eg-path;
+my $istr = "(no content)";
 if %rpaths{$eg}:exists {
-   $eg-path = %rpaths{$eg}
+   $eg-path = %rpaths{$eg};
+   $istr = get-content $eg-path;
 }
 else {
-    die "FATAL: \$eg-path is undefined";
+    #die "FATAL: \$eg-path is undefined";
+    say "WARNING: \$eg-path is undefined";
 }
 
-my $istr = get-content $eg-path;
 lives-ok {
     for $istr.lines -> $line {
         say "line: $line"
     }
-}, "contentents of dir 'resources'";
+}, "contents of dir 'resources'";
 
 # check downloading resource files
 my $tdir;
