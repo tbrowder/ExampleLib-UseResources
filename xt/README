@@ -1,0 +1,12 @@
+This directory contains tests for the $?DISTRIBUTION resources for
+installed modules:
+
+Mod1 
+ resources/
+   file1
+ t/test1
+ META6.json/resources
+
+
+Mod2 - good META6.json and resources directory
+

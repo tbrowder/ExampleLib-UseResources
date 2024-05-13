@@ -1,0 +1,29 @@
+{
+  "name": "ModX"
+  "provides": {
+    "ModX": "lib/ModX.rakumod"
+  },
+  "resources": [
+    "file1",
+    "../lib/ModX.rakumod",
+    "../t/zz-UseResources.t"
+  ],
+  "auth": "zef:tbrowder",
+  "authors": [
+    "Tom Browder"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+    "File::Temp"
+  ],
+  "description": "Test",
+  "license": "Artistic-2.0",
+  "perl": "6.d",
+  "source-url": "https://github.com/tbrowder/ExampleLib-UseResources.git",
+  "tags": [
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.1"
+}
