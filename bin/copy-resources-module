@@ -1,1 +1,38 @@
 #!/use/bin/env raku
+
+if not @*ARGS {
+    print qq:to/HERE/;
+    Usage: {$*PROGRAM.basename} file=X mod=Y
+
+      Where:
+        X is the file name of the copy of the 'ExampleLib::UseResources'
+           module file
+        Y is the desired inside module name
+
+    Files are created in the current directory.
+    HERE
+    exit;
+}
+
+my ($ofil, $mod);
+my $debug = 0;
+for @*ARGS {
+    when /^ :i 'file='(\S+) / {
+        $ofil = ~$0;
+    }
+    when /^ :i 'mod='(\S+) / {
+        $mod = ~$0;
+    }
+    when /^ :i d / {
+        ++$debug
+    }
+    default {
+        say "WARNING: Unknown arg '$_'";
+    }
+}
+
+# slurp the mod file via RESOURCES
+my $mstr = slurp ?
+
+# slurp the test file via RESOURCES
+my $tstr = slurp ?

@@ -7,15 +7,19 @@ B<ExampleLib::UseResources> - Provides routines to access $?DISTRIBUTION rsource
 =head1 SYNOPSIS
 
 =begin code :lang<raku>
-use Module::Utils;
-# use its routines to query and download your module's repository contents
+# Copy and rename its module and test file into your
+# module's repo. Then use its routines to query and 
+# download your installed module's repository contents.
+$ copy-resources-module file=Utils  mod=Module::Utils
+# OUTPUT
+
 =end code
 
 =head1 DESCRIPTION
 
-This package provides module authors with a module Rakumod file to copy and paste into
+This package provides module authors with a Rakumod module file to copy and paste into
 their own module distribution repo that will enable them to use
-the special variable, C<$?RESOURCES>, to access files included in an installed
+the special variable, C<$?DISTRIBUTION>, to access files included in an installed
 module distribution.
 
 =head2 Use the module in your code
@@ -31,7 +35,8 @@ copy-resources-module file=<desired module file name> module=<desired module nam
 =end code
 
 The process also creates a test file for that installation. Note the files are
-created in the current directory and you will have to be put it in place manually.
+created in the current directory, and you will have to be put it in its
+proper place manually.
 
 =head2 Module details
 
@@ -60,7 +65,8 @@ The file's contents are available.  The same is true for any file
 in the source code I<ifi> it's listed in file C<META6.json> in 
 the C<"resources:"> list.
 In that list its path I<must> be shown I<relative> to directory './resources'
-as it is in the example.
+as it is in the example, so it is effecttively listed in the './resources'
+directory.
 =end item
 
 For the moment, authors must list the desired resources twice: once in

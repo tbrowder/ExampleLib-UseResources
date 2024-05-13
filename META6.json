@@ -6,19 +6,22 @@
   "build-depends": [
   ],
   "depends": [
+    "File::Temp"
   ],
   "description": "Provides routines to access $?DISTRIBUTION resources for installed module distributions",
   "license": "Artistic-2.0",
   "name": "ExampleLib::UseResources",
   "perl": "6.d",
   "provides": {
-    "ExampleLib::UseResources": "lib/ExampleLib/UseResources.rakumod"
+    "ExampleLib::UseResources": "lib/ExampleLib/UseResources.rakumod",
+    "ExampleLib::Utils": "lib/ExampleLib/Utils.rakumod"
   },
   "resources": [
     "file1",
     "file2",
     "sdir/file3",
-    "../lib/Module/Utils.rakumod"
+    "../lib/ExampleLib/UseResources.rakumod",
+    "../t/zz-UseResources.t"
   ],
   "source-url": "https://github.com/tbrowder/ExampleLib-UseResources.git",
   "tags": [

@@ -9,14 +9,17 @@ SYNOPSIS
 ========
 
 ```raku
-use Module::Utils;
-# use its routines to query and download your module's repository contents
+# Copy and rename its module and test file into your
+# module's repo. Then use its routines to query and 
+# download your installed module's repository contents.
+$ copy-resources-module file=Utils  mod=Module::Utils
+# OUTPUT
 ```
 
 DESCRIPTION
 ===========
 
-This package provides module authors with a module Rakumod file to copy and paste into their own module distribution repo that will enable them to use the special variable, `$?RESOURCES`, to access files included in an installed module distribution.
+This package provides module authors with a Rakumod module file to copy and paste into their own module distribution repo that will enable them to use the special variable, `$?DISTRIBUTION`, to access files included in an installed module distribution.
 
 Use the module in your code
 ---------------------------
@@ -25,7 +28,7 @@ To use it in your module repo 'MyModule', copy this module's '/lib/ExampleLib/Us
 
     copy-resources-module file=<desired module file name> module=<desired module name>
 
-The process also creates a test file for that installation. Note the files are created in the current directory and you will have to be put it in place manually.
+The process also creates a test file for that installation. Note the files are created in the current directory, and you will have to be put it in its proper place manually.
 
 Module details
 --------------
@@ -46,7 +49,7 @@ Notice some oddities in the file list above:
 
   * File '../lib/MyModule.rakumod'
 
-    The file's contents are available. The same is true for any file in the source code *ifi* it's listed in file `META6.json` in the `"resources:"` list. In that list its path *must* be shown *relative* to directory './resources' as it is in the example.
+    The file's contents are available. The same is true for any file in the source code *ifi* it's listed in file `META6.json` in the `"resources:"` list. In that list its path *must* be shown *relative* to directory './resources' as it is in the example, so it is effecttively listed in the './resources' directory.
 
 For the moment, authors must list the desired resources twice: once in the `META6.json` file and once in the source code's `resources` directory.
 
